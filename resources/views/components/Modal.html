@@ -1,0 +1,9 @@
+<div x-show="isModalOpen" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="modal-box bg-white p-6 rounded-lg">
+      <h3 class="font-bold text-lg">Deal Claimed!</h3>
+      <p class="py-4">Your deal has been successfully claimed.</p>
+      <div class="modal-action">
+        <button @click="isModalOpen = false; activeTab = 'profile'" class="btn bg-orange-500 text-white rounded-full">View Claimed Deals</button>
+      </div>
+    </div>
+</div>

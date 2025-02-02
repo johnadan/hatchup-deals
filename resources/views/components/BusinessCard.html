@@ -1,0 +1,5 @@
+<div x-data="businessCardData" x-init="initBusinessCard()">
+    <template x-for="business in businesses" :key="business.id">
+      <div x-html="businessCardTemplate(business)"></div>
+    </template>
+</div>
