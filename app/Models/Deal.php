@@ -14,10 +14,22 @@ class Deal extends Model
     /** @use HasFactory<\Database\Factories\DealFactory> */
     use HasFactory;
 
-    public function business(): BelongsTo
-    {
-        return $this->belongsTo(Business::class);
-    }
+    protected $fillable = [
+        'business_id',
+        'category_id',
+        'title',
+        'description',
+        'original_price',
+        'discounted_price',
+        'start_date',
+        'end_date',
+        'max_usage_limit',
+        'current_usage_count',
+        'is_active',
+        'is_featured',
+        'type',
+        'image',
+    ];
 
     // public function customers(): BelongsToMany
     // {
@@ -32,12 +44,36 @@ class Deal extends Model
     // {
     //     return $this->hasMany(ClaimedDeal::class);
     // }
-    public function dealClaims(): HasMany
+    // public function dealClaims(): HasMany
+    // {
+    //     return $this->hasMany(DealClaim::class);
+    // }
+    // public function favorites(): MorphMany
+    // {
+    //     return $this->morphMany(Favorite::class, 'favoritable');
+    // }
+
+     // Relationship: A deal can be favorited by users
+     public function favorites()
+     {
+         return $this->morphMany(Favorite::class, 'favoriteable');
+     }
+
+     // Relationship: A deal can be featured by a business
+     public function featuredDeal()
+     {
+         return $this->hasOne(FeaturedDeal::class);
+     }
+
+    // Relationship: A deal belongs to a business
+    public function business()
     {
-        return $this->hasMany(DealClaim::class);
+        return $this->belongsTo(Business::class);
     }
-    public function favorites(): MorphMany
+
+    // Relationship: A deal can have many orders
+    public function orders()
     {
-        return $this->morphMany(Favorite::class, 'favoritable');
+        return $this->hasMany(Order::class);
     }
 }

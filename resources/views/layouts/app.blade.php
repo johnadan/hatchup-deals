@@ -17,6 +17,8 @@
         {{-- <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css" rel="stylesheet" type="text/css" /> --}}
         {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
 
+        <script src="https://unpkg.com/html5-qrcode"></script>
+
         <script src="https://kit.fontawesome.com/e784aa8757.js" crossorigin="anonymous"></script>
     </head>
     <body class="font-sans antialiased">

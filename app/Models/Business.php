@@ -15,17 +15,13 @@ class Business extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'name',
+        'address',
+        'phone_number',
         'city_id',
         'category_id',
         'is_featured',
-        'approved',
     ];
-
-    public function deals(): HasMany
-    {
-        return $this->hasMany(Deal::class);
-    }
 
     public function city(): BelongsTo
     {
@@ -41,13 +37,25 @@ class Business extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
+    // public function user(): BelongsTo
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
 
     public function favorites(): MorphMany
     {
         return $this->morphMany(Favorite::class, 'favoritable');
     }
+
+     // Relationship: A business has many users
+     public function users()
+     {
+         return $this->hasMany(User::class);
+     }
+
+     // Relationship: A business has many deals
+     public function deals()
+     {
+         return $this->hasMany(Deal::class);
+     }
 }

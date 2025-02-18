@@ -12,7 +12,7 @@ class UpdateDealRequest extends FormRequest
     public function authorize(): bool
     {
         // return false;
-        return true;
+        return true; // Allow all users to update deals (adjust as needed)
     }
 
     /**
@@ -23,7 +23,14 @@ class UpdateDealRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'sometimes|string|max:255',
+            'description' => 'sometimes|string',
+            'original_price' => 'sometimes|numeric|min:0',
+            'discounted_price' => 'sometimes|numeric|min:0',
+            'start_date' => 'sometimes|date',
+            'end_date' => 'sometimes|date|after:start_date',
+            'max_usage_limit' => 'sometimes|integer|min:1',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 }

@@ -35,7 +35,7 @@
                 </li> --}}
                 </ul>
             </div>
-        <h3 class="text-lg font-medium text-white">{{ auth()->user()->full_name }} </h3>
+        <h3 class="text-lg font-medium text-white">{{ auth()->user()->full_name }}</h3>
         </div>
     </div>
     {{-- <div class="avatar">
@@ -53,16 +53,17 @@
         </li>
         @if(auth()->user()->role === 'customer')
         <li class="py-3">
-        <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'bg-base-100 text-black hover:bg-base-100 hover:text-black' : 'bg-base-100 text-black' }}">
-            <i class="fa-solid fa-shop"></i>
-            Local Businesses
-        </a>
+            <a href="{{ route('customer.businesses.index') }}" class="{{ request()->routeIs('customer.businesses.index') ? 'bg-base-100 text-black hover:bg-base-100 hover:text-black' : 'hover:bg-base-100 hover:text-black' }}">
+                <i class="fa-solid fa-shop"></i>
+                Local Businesses
+            </a>
         </li>
         <li class="py-3">
-        <a class="hover:bg-base-100 hover:text-black">
-            <i class="fa-solid fa-percent"></i>
-            Local Deals
-        </a>
+            {{-- <a class="hover:bg-base-100 hover:text-black" href="{{ route('deals') }}"> --}}
+            <a href="{{ route('customer.deals.index') }}" class="{{ request()->routeIs('customer.deals.index') ? 'bg-base-100 text-black hover:bg-base-100 hover:text-black' : 'hover:bg-base-100 hover:text-black' }}">
+                <i class="fa-solid fa-percent"></i>
+                Local Deals
+            </a>
         </li>
         <li class="py-3">
         <a class="hover:bg-base-100 hover:text-black">
@@ -71,25 +72,26 @@
         </a>
         </li>
         @elseif(auth()->user()->role === 'business')
-        <li class="py-3">
+        {{-- <li class="py-3">
             <a href="{{ route('dashboard') }}" class="hover:bg-base-100 hover:text-black">
                 <i class="fa-solid fa-signs-post"></i>
                 Posts
             </a>
-        </li>
+        </li> --}}
         <li class="py-3">
-            <a class="hover:bg-base-100 hover:text-black">
+            <a href="{{ route('business.deals.index') }}" class="{{ request()->routeIs('business.deals.index') ? 'bg-base-100 text-black hover:bg-base-100 hover:text-black' : 'hover:bg-base-100 hover:text-black' }}">
+            {{-- <a class="hover:bg-base-100 hover:text-black"> --}}
                 <i class="fa-solid fa-percent"></i>
                 Deals
             </a>
         </li>
         @else
-        <li class="py-3">
+        {{-- <li class="py-3">
             <a href="{{ route('dashboard') }}" class="hover:bg-base-100 hover:text-black">
             <i class="fa-solid fa-icons"></i>
             Categories
             </a>
-        </li>
+        </li> --}}
         @endif
         <li class="py-3">
             <a href="{{ route('profile.edit') }}" class="hover:bg-base-100 hover:text-black">

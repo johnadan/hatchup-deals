@@ -9,4 +9,11 @@ class AdminAction extends Model
 {
     /** @use HasFactory<\Database\Factories\AdminActionFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'admin_id',
+        'action',
+        'target_id',
+        'reason',
+    ];
 }

@@ -12,7 +12,7 @@ class StoreDealRequest extends FormRequest
     public function authorize(): bool
     {
         // return false;
-        return true;
+        return true; // Allow all users to create deals (adjust as needed)
     }
 
     /**
@@ -23,12 +23,18 @@ class StoreDealRequest extends FormRequest
     public function rules(): array
     {
         return [
+            // 'end_date' => 'required|date|after_or_equal:start_date',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'price' => 'required|numeric',
+            'original_price' => 'required|numeric|min:0',
+            'discounted_price' => 'required|numeric|min:0',
+            'type' => 'required|string|in:free,paid',
             'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            // Add other relevant validation rules
+            'end_date' => 'required|date|after:start_date',
+            'max_usage_limit' => 'required|integer|min:1',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'category_id' => 'required|integer',
+            // 'category_id' => 'required|exists:categories,id',
         ];
     }
 }

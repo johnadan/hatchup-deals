@@ -12,12 +12,36 @@ class Favorite extends Model
     /** @use HasFactory<\Database\Factories\FavoriteFactory> */
     use HasFactory;
 
-    public function user(): BelongsTo
+    // protected $fillable = [
+    //     'user_id',
+    //     'reference_id',
+    //     'type'
+    // ];
+
+    protected $fillable = [
+        'user_id',
+        'favoriteable_id',
+        'favoriteable_type'
+    ];
+
+    // public function user(): BelongsTo
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
+
+    // public function favoritable(): MorphTo
+    // {
+    //     return $this->morphTo();
+    // }
+
+    // Relationship: A favorite belongs to a user
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function favoritable(): MorphTo
+    // Polymorphic relationship: A favorite can belong to a business or deal
+    public function favoriteable()
     {
         return $this->morphTo();
     }

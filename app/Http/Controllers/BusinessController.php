@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Business;
-use App\Models\Category;
+// use App\Models\Business;
+// use App\Models\Category;
+use App\Models\{Business, Category, Deal, FeaturedDeal};
 use App\Http\Requests\StoreBusinessRequest;
+use App\Http\Requests\StoreDealRequest;
 use App\Http\Requests\UpdateBusinessRequest;
 
 class BusinessController extends Controller
@@ -14,7 +16,9 @@ class BusinessController extends Controller
      */
     public function index()
     {
-        //
+        $deals = Deal::where('business_id',  auth()->user()->business)->get();
+        return view('business/deals/index', compact('deals'));
+        // return view('business/deals/index');
     }
 
     // public function categoryBusinesses(Category $category)
@@ -27,10 +31,27 @@ class BusinessController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function createUser()
+    {
+        return view('auth.register-business');
+    }
+
+    public function createDeal()
     {
         $categories = Category::all();
-        return view('auth.register-business', compact('categories'));
+        return view('business/deals/create', compact('categories'));
+    }
+
+    public function storeDeal(StoreDealRequest $request)
+    {
+        dd($request->all());
+        // $business = auth()->user()->business;
+        // $deal = $business->deals()->create([
+        //     'image' => $request->file('image')->store('public/images/deals', 'public'),
+        //     'category_id' => $business->category_id,
+        //     ...$request->validated()
+        // ]);
+        // return redirect()->route('business.deals.index')->with('success', 'Deal created!');
     }
 
     /**
@@ -71,5 +92,24 @@ class BusinessController extends Controller
     public function destroy(Business $business)
     {
         //
+    }
+
+    // Feature a deal
+    public function featureDeal($id)
+    {
+        $deal = Deal::findOrFail($id);
+        FeaturedDeal::create([
+            'deal_id' => $deal->id,
+            'featured_at' => now(),
+        ]);
+
+        return redirect()->back()->with('success', 'Deal featured!');
+    }
+
+    // Unfeature a deal
+    public function unfeatureDeal($id)
+    {
+        FeaturedDeal::where('deal_id', $id)->delete();
+        return redirect()->back()->with('success', 'Deal unfeatured!');
     }
 }

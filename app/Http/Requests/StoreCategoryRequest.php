@@ -23,16 +23,18 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'full_name' => ['required', 'string', 'max:255'],//unique:categories
-            'display_name' => ['required', 'string', 'max:255'],
+            // 'full_name' => ['required', 'string', 'max:255'],
+            // 'display_name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:categories'],
         ];
     }
 
     public function messages()
     {
         return [
-            'full_name.required' => 'Full Name is required',
-            'display_name.required' => 'Display Name is required',
+            // 'full_name.required' => 'Full Name is required',
+            // 'display_name.required' => 'Display Name is required',
+            'name.required' => 'Name is required',
         ];
     }
 }

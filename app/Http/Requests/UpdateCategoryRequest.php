@@ -23,8 +23,9 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'full_name' => ['string', 'max:255'],
-            'display_name' => ['string', 'max:255'],
+            // 'full_name' => ['string', 'max:255'],
+            // 'display_name' => ['string', 'max:255'],
+            'name' => ['string', 'max:255'],
         ];
     }
 }

@@ -2,7 +2,16 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}">
+    @if (session()->has('success'))
+    <x-success-alert></x-success-alert>
+    @endif
+
+    @if (session()->has('error'))
+        <x-error-alert></x-error-alert>
+    @endif
+
+    {{-- <form method="POST" action="{{ route('login') }}"> --}}
+    <form method="POST" action="{{ route('auth.login') }}">
         @csrf
 
         <!-- Email Address -->

@@ -13,8 +13,9 @@ class Category extends Model
     use HasFactory;
 
     protected $fillable = [
-        'full_name',
-        'display_name',
+        'name',
+        // 'full_name',
+        // 'display_name',
     ];
 
     // public function businesses(): BelongsToMany
