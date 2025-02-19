@@ -20,13 +20,25 @@ use Illuminate\Support\Str;
 
 class DealController extends Controller
 {
+    // Show deals by category
+    public function index(Category $category)
+    {
+        $deals = $category->deals;
+        return view('deals.index', compact('category', 'deals'));
+    }
+
+    // Show individual deal details
+    public function show(Deal $deal)
+    {
+        return view('deals.show', compact('deal'));
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        return view('deals/index');
-    }
+    // public function index()
+    // {
+    //     return view('deals/index');
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -220,10 +232,10 @@ class DealController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Deal $deal)
-    {
-        //
-    }
+    // public function show(Deal $deal)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.

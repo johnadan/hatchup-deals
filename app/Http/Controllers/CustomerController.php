@@ -7,23 +7,21 @@ use App\Models\{Deal, DealCode, Category, Business, City, User, Order};
 
 class CustomerController extends Controller
 {
-    public function businesses()
-    {
-        // $categories = Category::all();
-        // $cities = City::all();
-        // $deals = Deal::all();
-        // $orders = Order::all();
-        $businesses = Business::all();
-        return view('customer/businesses', compact('businesses'));
-    }
+    // public function businesses()
+    // {
+    //     // $categories = Category::all();
+    //     // $cities = City::all();
+    //     $businesses = Business::all();
+    //     return view('customer/businesses', compact('businesses'));
+    // }
 
-    public function businessCategory()
-    { //$categoryId
-        // $category = Category::find($categoryId);
-        // $businesses = Business::where('category_id', $categoryId)->get();
-        // return view('customer/business-category', compact('category', 'businesses'));
-        return view('customer/businesses-category');
-    }
+    // public function businessCategory()
+    // { //$categoryId
+    //     // $category = Category::find($categoryId);
+    //     // $businesses = Business::where('category_id', $categoryId)->get();
+    //     // return view('customer/business-category', compact('category', 'businesses'));
+    //     return view('customer/businesses-category');
+    // }
 
     public function business($id)
     {

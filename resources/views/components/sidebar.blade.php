@@ -53,7 +53,7 @@
         </li>
         @if(auth()->user()->role === 'customer')
         <li class="py-3">
-            <a href="{{ route('customer.businesses.index') }}" class="{{ request()->routeIs('customer.businesses.index') ? 'bg-base-100 text-black hover:bg-base-100 hover:text-black' : 'hover:bg-base-100 hover:text-black' }}">
+            <a href="{{ route('categories.businesses') }}" class="{{ request()->routeIs('categories.businesses') ? 'bg-base-100 text-black hover:bg-base-100 hover:text-black' : 'hover:bg-base-100 hover:text-black' }}">
                 <i class="fa-solid fa-shop"></i>
                 Local Businesses
             </a>

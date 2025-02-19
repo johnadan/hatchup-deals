@@ -11,15 +11,27 @@ use App\Http\Requests\UpdateBusinessRequest;
 
 class BusinessController extends Controller
 {
+    // Show businesses by category
+    public function index(Category $category)
+    {
+        $businesses = $category->businesses;
+        return view('businesses/index', compact('category', 'businesses'));
+    }
+
+    // Show individual business profile
+    public function show(Business $business)
+    {
+        return view('businesses.show', compact('business'));
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $deals = Deal::where('business_id',  auth()->user()->business)->get();
-        return view('business/deals/index', compact('deals'));
-        // return view('business/deals/index');
-    }
+    // public function index()
+    // {
+    //     $deals = Deal::where('business_id',  auth()->user()->business)->get();
+    //     return view('business/deals/index', compact('deals'));
+    //     // return view('business/deals/index');
+    // }
 
     // public function categoryBusinesses(Category $category)
     // {
@@ -65,10 +77,10 @@ class BusinessController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Business $business)
-    {
-        //
-    }
+    // public function show(Business $business)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.

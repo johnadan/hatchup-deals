@@ -20,11 +20,10 @@
                 <x-error-alert></x-error-alert>
             @endif
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-between items-center p-4">
-                {{-- {{ route('dashboard') }} --}}
-                <a href="">
+                <a href="{{ route('categories.businesses') }}">
                     <h1 class="font-bold text-xl">Back</h1>
                 </a>
-                <label class="input input-bordered flex items-center gap-2">
+                {{-- <label class="input input-bordered flex items-center gap-2">
                     <input type="text" class="grow border-gray-100" placeholder="Search Businesses" id="search-input" x-model="searchQuery"/>
                     <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -36,11 +35,37 @@
                         d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
                         clip-rule="evenodd" />
                     </svg>
-                </label>
+                </label> --}}
+                <h1 class="text-xl">Businesses in <strong>{{ $category->name }}</strong></h1>
             </div>
             <div class="container mx-auto p-4 sm:p-6 lg:p-8">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+                    @foreach ($businesses as $business)
                     <div class="cards-container">
+                        <div class="card">
+                            <a href="{{ route('businesses.show', $business) }}" class="group relative block bg-black rounded-lg">
+                                <img
+                                alt=""
+                                src="https://images.unsplash.com/photo-1603871165848-0aa92c869fa1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=772&q=80"
+                                class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
+                                />
+                                <div class="relative p-4 sm:p-6 lg:p-8">
+                                <p class="text-sm font-medium uppercase tracking-widest text-pink-500">{{ $business->name }}</p>
+                                <p class="text-xl font-bold text-white sm:text-2xl">UNA Pizza + Wine</p>
+                                <div class="mt-32 sm:mt-48 lg:mt-64">
+                                    <div>
+                                        <p class="text-sm text-white">
+                                            Insert bio here: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
+                                            quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
+                                        </p>
+                                    </div>
+                                </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    @endforeach
+                    {{-- <div class="cards-container">
                         <div class="card">
                             <a href="#" class="group relative block bg-black rounded-lg">
                                 <img
@@ -52,13 +77,11 @@
                                 <p class="text-sm font-medium uppercase tracking-widest text-pink-500">UNA</p>
                                 <p class="text-xl font-bold text-white sm:text-2xl">UNA Pizza + Wine</p>
                                 <div class="mt-32 sm:mt-48 lg:mt-64">
-                                    <div
-                                    {{-- class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100" --}}
-                                    >
-                                    <p class="text-sm text-white">
-                                        Insert bio here: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
-                                        quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
-                                    </p>
+                                    <div>
+                                        <p class="text-sm text-white">
+                                            Insert bio here: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
+                                            quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
+                                        </p>
                                     </div>
                                 </div>
                                 </div>
@@ -77,13 +100,11 @@
                                 <p class="text-sm font-medium uppercase tracking-widest text-pink-500">UNA</p>
                                 <p class="text-xl font-bold text-white sm:text-2xl">UNA Pizza + Wine</p>
                                 <div class="mt-32 sm:mt-48 lg:mt-64">
-                                    <div
-                                    {{-- class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100" --}}
-                                    >
-                                    <p class="text-sm text-white">
-                                        Insert bio here: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
-                                        quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
-                                    </p>
+                                    <div>
+                                        <p class="text-sm text-white">
+                                            Insert bio here: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
+                                            quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
+                                        </p>
                                     </div>
                                 </div>
                                 </div>
@@ -102,44 +123,17 @@
                                 <p class="text-sm font-medium uppercase tracking-widest text-pink-500">UNA</p>
                                 <p class="text-xl font-bold text-white sm:text-2xl">UNA Pizza + Wine</p>
                                 <div class="mt-32 sm:mt-48 lg:mt-64">
-                                    <div
-                                    {{-- class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100" --}}
-                                    >
-                                    <p class="text-sm text-white">
-                                        Insert bio here: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
-                                        quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
-                                    </p>
+                                    <div>
+                                        <p class="text-sm text-white">
+                                            Insert bio here: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
+                                            quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
+                                        </p>
                                     </div>
                                 </div>
                                 </div>
                             </a>
                         </div>
-                    </div>
-                    <div class="cards-container">
-                        <div class="card">
-                            <a href="#" class="group relative block bg-black rounded-lg">
-                                <img
-                                alt=""
-                                src="https://images.unsplash.com/photo-1603871165848-0aa92c869fa1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=772&q=80"
-                                class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
-                                />
-                                <div class="relative p-4 sm:p-6 lg:p-8">
-                                <p class="text-sm font-medium uppercase tracking-widest text-pink-500">UNA</p>
-                                <p class="text-xl font-bold text-white sm:text-2xl">UNA Pizza + Wine</p>
-                                <div class="mt-32 sm:mt-48 lg:mt-64">
-                                    <div
-                                    {{-- class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100" --}}
-                                    >
-                                    <p class="text-sm text-white">
-                                        Insert bio here: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
-                                        quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
-                                    </p>
-                                    </div>
-                                </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                    </div> --}}
                     <!-- Cards container -->
                     {{-- <div x-data="{ searchQuery: '', cards: [
                         { title: 'Tony Wayne', content: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?' },

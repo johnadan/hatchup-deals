@@ -8,6 +8,19 @@ use App\Http\Requests\UpdateCategoryRequest;
 
 class CategoryController extends Controller
 {
+    // Show all categories for businesses
+    public function businesses()
+    {
+        $categories = Category::withCount('businesses')->get();
+        return view('categories/businesses', compact('categories'));
+    }
+
+    // Show all categories for deals
+    public function deals()
+    {
+        $categories = Category::withCount('deals')->get();
+        return view('categories.deals', compact('categories'));
+    }
     /**
      * Display a listing of the resource.
      */

@@ -88,8 +88,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/deals', [CustomerController::class, 'deals'])->name('customer.deals.index');
         Route::get('/deals/category', [CustomerController::class, 'dealCategory'])->name('customer.deals.category');
         Route::get('/deal/id', [CustomerController::class, 'dealDetails'])->name('customer.deal');
-        Route::get('/businesses', [CustomerController::class, 'businesses'])->name('customer.businesses.index');
-        Route::get('/businesses/category', [CustomerController::class, 'businessCategory'])->name('customer.businesses.category');
+        // Route::get('/businesses', [CustomerController::class, 'businesses'])->name('customer.businesses.index');
+        // Category pages
+        Route::get('/categories/businesses', [CategoryController::class, 'businesses'])->name('categories.businesses');
+        // Route::get('/businesses/category', [CustomerController::class, 'businessCategory'])->name('customer.businesses.category');
+        // Dynamic business and deal pages
+        Route::get('/categories/businesses/{category}', [BusinessController::class, 'index'])->name('businesses.by_category');
+        // Business and deal profile pages
+        Route::get('/businesses/{business}', [BusinessController::class, 'show'])->name('businesses.show');
         // Purchase a deal
         Route::post('/deals/purchase', [DealController::class, 'purchase'])->name('deals.purchase');
         Route::get('/purchased-deals', [OrderController::class, 'purchasedDeals'])->name('customer.purchased-deals');

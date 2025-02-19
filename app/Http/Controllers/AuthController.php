@@ -88,7 +88,7 @@ class AuthController extends Controller
 
             if ($user->role === 'customer') {
                 // return redirect()->route('customer.dashboard')->with('success', 'Registration successful!');
-                return redirect()->route('customer.businesses.index')->with('success', 'Registration successful!');
+                return redirect()->route('categories.businesses')->with('success', 'Registration successful!');
             } elseif ($user->role === 'admin') {
                 return redirect()->route('admin.businesses.index')->with('success', 'Registration successful!');
             }
@@ -116,7 +116,7 @@ class AuthController extends Controller
                 return redirect()->route('login')->with('error', 'Your account is pending approval.');
             } else { //approved
                 if ($user->role === 'customer') {
-                    return redirect()->route('customer.businesses.index');
+                    return redirect()->route('categories.businesses');
                     // ->with('success', 'Login successful!')
                 } elseif ($user->role === 'admin') {
                     // return redirect()->route('admin.businesses.index');
