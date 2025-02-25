@@ -59,8 +59,7 @@
             </a>
         </li>
         <li class="py-3">
-            {{-- <a class="hover:bg-base-100 hover:text-black" href="{{ route('deals') }}"> --}}
-            <a href="{{ route('customer.deals.index') }}" class="{{ request()->routeIs('customer.deals.index') ? 'bg-base-100 text-black hover:bg-base-100 hover:text-black' : 'hover:bg-base-100 hover:text-black' }}">
+            <a href="{{ route('categories.deals') }}" class="{{ request()->routeIs('categories.deals') ? 'bg-base-100 text-black hover:bg-base-100 hover:text-black' : 'hover:bg-base-100 hover:text-black' }}">
                 <i class="fa-solid fa-percent"></i>
                 Local Deals
             </a>
@@ -80,7 +79,6 @@
         </li> --}}
         <li class="py-3">
             <a href="{{ route('business.deals.index') }}" class="{{ request()->routeIs('business.deals.index') ? 'bg-base-100 text-black hover:bg-base-100 hover:text-black' : 'hover:bg-base-100 hover:text-black' }}">
-            {{-- <a class="hover:bg-base-100 hover:text-black"> --}}
                 <i class="fa-solid fa-percent"></i>
                 Deals
             </a>

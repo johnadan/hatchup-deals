@@ -40,7 +40,9 @@
             </div>
             <div class="container mx-auto p-4 sm:p-6 lg:p-8">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-                    @foreach ($businesses as $business)
+                    {{-- && $businesses->currentPage() > 1 --}}
+                    @if(!empty($businesses)  && $businesses->count() > 0 )
+                        @foreach ($businesses as $business)
                     <div class="cards-container">
                         <div class="card">
                             <a href="{{ route('businesses.show', $business) }}" class="group relative block bg-black rounded-lg">
@@ -64,76 +66,10 @@
                             </a>
                         </div>
                     </div>
-                    @endforeach
-                    {{-- <div class="cards-container">
-                        <div class="card">
-                            <a href="#" class="group relative block bg-black rounded-lg">
-                                <img
-                                alt=""
-                                src="https://images.unsplash.com/photo-1603871165848-0aa92c869fa1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=772&q=80"
-                                class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
-                                />
-                                <div class="relative p-4 sm:p-6 lg:p-8">
-                                <p class="text-sm font-medium uppercase tracking-widest text-pink-500">UNA</p>
-                                <p class="text-xl font-bold text-white sm:text-2xl">UNA Pizza + Wine</p>
-                                <div class="mt-32 sm:mt-48 lg:mt-64">
-                                    <div>
-                                        <p class="text-sm text-white">
-                                            Insert bio here: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
-                                            quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
-                                        </p>
-                                    </div>
-                                </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="cards-container">
-                        <div class="card">
-                            <a href="#" class="group relative block bg-black rounded-lg">
-                                <img
-                                alt=""
-                                src="https://images.unsplash.com/photo-1603871165848-0aa92c869fa1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=772&q=80"
-                                class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
-                                />
-                                <div class="relative p-4 sm:p-6 lg:p-8">
-                                <p class="text-sm font-medium uppercase tracking-widest text-pink-500">UNA</p>
-                                <p class="text-xl font-bold text-white sm:text-2xl">UNA Pizza + Wine</p>
-                                <div class="mt-32 sm:mt-48 lg:mt-64">
-                                    <div>
-                                        <p class="text-sm text-white">
-                                            Insert bio here: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
-                                            quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
-                                        </p>
-                                    </div>
-                                </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="cards-container">
-                        <div class="card">
-                            <a href="#" class="group relative block bg-black rounded-lg">
-                                <img
-                                alt=""
-                                src="https://images.unsplash.com/photo-1603871165848-0aa92c869fa1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=772&q=80"
-                                class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
-                                />
-                                <div class="relative p-4 sm:p-6 lg:p-8">
-                                <p class="text-sm font-medium uppercase tracking-widest text-pink-500">UNA</p>
-                                <p class="text-xl font-bold text-white sm:text-2xl">UNA Pizza + Wine</p>
-                                <div class="mt-32 sm:mt-48 lg:mt-64">
-                                    <div>
-                                        <p class="text-sm text-white">
-                                            Insert bio here: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
-                                            quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
-                                        </p>
-                                    </div>
-                                </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div> --}}
+                        @endforeach
+                    @else
+                    <p>No businesses found.</p>
+                    @endif
                     <!-- Cards container -->
                     {{-- <div x-data="{ searchQuery: '', cards: [
                         { title: 'Tony Wayne', content: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?' },

@@ -5,14 +5,6 @@
         </h2>
     </x-slot>
 
-    @if (session()->has('success'))
-        <x-success-alert></x-success-alert>
-    @endif
-
-    @if (session()->has('error'))
-        <x-error-alert></x-error-alert>
-    @endif
-
     <div class="grid grid-cols-1 md:grid-cols-3 h-screen">
         <div class="row-span-2 bg-black">
             <x-sidebar></x-sidebar>
@@ -61,6 +53,25 @@
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
+                            {{-- test --}}
+                            @if (session()->has('success'))
+                                <x-success-alert></x-success-alert>
+                            @endif
+
+                            @if (session()->has('error'))
+                                <x-error-alert></x-error-alert>
+                            @endif
+                            <br>
+                            @if ($errors->any())
+                                <div class="alert alert-danger bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            <br>
                             Add Deal
                             <form method="POST" action="{{ route('business.deals.store') }}" enctype="multipart/form-data">
                                 @csrf
@@ -69,28 +80,35 @@
                                     <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" :value="old('title')" required autofocus autocomplete="title" />
                                     <x-input-error class="mt-2" :messages="$errors->get('title')" />
                                 </div>
-                                <div class="form-group my-2">
+                                {{-- <div class="form-group my-2">
                                     <x-input-label for="description" :value="__('Description')" />
                                     <x-text-area id="description" name="description" class="mt-1 block w-full" :value="old('description')" required autocomplete="description" wire:model="description" />
                                     <x-input-error class="mt-2" :messages="$errors->get('description')" />
+                                </div> --}}
+                                <div class="form-group my-2">
+                                    <x-input-label for="description" :value="__('Description')" />
+                                    <x-text-area id="description" name="description" class="mt-1 block w-full" :value="old('description')" required autocomplete="description" />
+                                    <x-input-error class="mt-2" :messages="$errors->get('description')" />
                                 </div>
                                 <div class="form-group my-2">
-                                    <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    {{-- <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                         Type
-                                    </label>
+                                    </label> --}}
+                                    <x-input-label for="type" :value="__('Type')" />
                                     <select id="type" name="type" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
                                         <option value="free">Free</option>
                                         <option value="paid">Paid</option>
                                     </select>
+                                    <x-input-error class="mt-2" :messages="$errors->get('type')" />
                                 </div>
                                 <div class="form-group my-2">
                                     <x-input-label for="orig_price" :value="__('Original Price')" />
-                                    <x-text-input id="orig_price" name="original_price" type="number" class="mt-1 block w-full" :value="old('orig_price')" required autocomplete="orig_price" />
+                                    <x-text-input id="orig_price" name="original_price" type="number" class="mt-1 block w-full" :value="old('orig_price')" required autocomplete="orig_price" step="0.01" />
                                     <x-input-error class="mt-2" :messages="$errors->get('orig_price')" />
                                 </div>
                                 <div class="form-group my-2">
                                     <x-input-label for="disc_price" :value="__('Discounted Price')" />
-                                    <x-text-input id="disc_price" name="discounted_price" type="number" class="mt-1 block w-full" :value="old('disc_price')" required autocomplete="disc_price" />
+                                    <x-text-input id="disc_price" name="discounted_price" type="number" class="mt-1 block w-full" :value="old('disc_price')" required autocomplete="disc_price" step="0.01" />
                                     <x-input-error class="mt-2" :messages="$errors->get('disc_price')" />
                                 </div>
                                 <div class="form-group my-2">
@@ -108,28 +126,54 @@
                                     <x-date-input id="end_date" name="end_date" class="mt-1 block w-full" :value="old('end_date')" required />
                                     <x-input-error class="mt-2" :messages="$errors->get('end_date')" />
                                 </div>
-                                <div class="form-group my-2">
-                                    <x-toggle-input id="is_active" name="is_active" :value="old('is_active')" required>
+                                {{-- <div class="form-group my-2">
+                                    <x-toggle-input id="is_active" name="is_active" :value="old('is_active')">
                                         {{ __('Is Active') }}
                                     </x-toggle-input>
                                     <x-input-error class="mt-2" :messages="$errors->get('is_active')" />
                                 </div>
                                 <div class="form-group my-2">
-                                    <x-toggle-input id="is_featured" name="is_featured" :value="old('is_featured')" required>
+                                    <x-toggle-input id="is_featured" name="is_featured" :value="old('is_featured')">
+                                        {{ __('Is Featured') }}
+                                    </x-toggle-input>
+                                    <x-input-error class="mt-2" :messages="$errors->get('is_featured')" />
+                                </div> --}}
+                                <div class="form-group my-2">
+                                    <x-toggle-input id="is_active" name="is_active" value="1" :checked="old('is_active', false)">
+                                        {{ __('Is Active') }}
+                                    </x-toggle-input>
+                                    <x-input-error class="mt-2" :messages="$errors->get('is_active')" />
+                                </div>
+                                <div class="form-group my-2">
+                                    <x-toggle-input id="is_featured" name="is_featured" value="1" :checked="old('is_featured', false)">
                                         {{ __('Is Featured') }}
                                     </x-toggle-input>
                                     <x-input-error class="mt-2" :messages="$errors->get('is_featured')" />
                                 </div>
                                 <div class="form-group my-2">
                                     <x-image-upload-input id="image" name="image" />
-                                    {{-- <label for="image">Deal Image</label>
-                                    <input type="file" name="image" id="image" class="form-control"> --}}
                                 </div>
                                 <div class="form-group my-2">
                                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                         Save
                                     </button>
                                 </div>
+                            </form>
+                            {{-- <label for="image">Deal Image</label>
+                                    <input type="file" name="image" id="image" class="form-control"> --}}
+                             {{-- <div class="form-group my-2">
+                                    <x-toggle-input id="is_active" name="is_active" :value="old('is_active', false ?? true)">
+                                        {{ __('Is Active') }}
+                                    </x-toggle-input>
+                                    <x-input-error class="mt-2" :messages="$errors->get('is_active')" />
+                                </div>
+
+                                <div class="form-group my-2">
+                                    <x-toggle-input id="is_featured" name="is_featured" :value="old('is_featured', false ?? true)">
+                                        {{ __('Is Featured') }}
+                                    </x-toggle-input>
+                                    <x-input-error class="mt-2" :messages="$errors->get('is_featured')" />
+                                </div> --}}
                                 {{-- <input type="file" class="file-input file-input-bordered w-full max-w-xs" /> --}}
                                 {{-- <div>
                                     <x-image-upload-input id="image" name="image" :value="old('image')" required autofocus>
@@ -137,11 +181,11 @@
                                     </x-image-upload-input>
                                     <x-input-error class="mt-2" :messages="$errors->get('image')" />
                                 </div> --}}
-                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    {{-- <script></script> --}}
 </x-app-layout>

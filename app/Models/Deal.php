@@ -31,6 +31,12 @@ class Deal extends Model
         'image',
     ];
 
+    protected $casts = [
+        'is_active' => 'boolean',
+        'is_featured' => 'boolean',
+    ];
+
+
     // public function customers(): BelongsToMany
     // {
     //     return $this->belongsToMany(Customer::class, 'customer_deal')->withPivot('purchase_date', 'quantity'); // Example pivot fields

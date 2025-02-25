@@ -102,21 +102,25 @@ class DealController extends Controller
     //     return redirect()->route('deals.index')->with('success', 'Deal created successfully!');
     // }
 
-    public function store(StoreDealRequest $request)
-    {
-        $imagePath = $request->hasFile('image') ? $request->file('image')->store('deals', 'public') : null;
-        $business = auth()->user()->business;
-        $category = $business->category;
-        Deal::create([
-            'business_id' => Auth::id(),
-            'image' => $imagePath,
-            // 'category_id' => $request->category_id,
-            'category_id' => $category->id,
-            ...$request->validated(),
-        ]);
+    // public function store(StoreDealRequest $request)
+    // {
+    //     $imagePath = $request->hasFile('image') ? $request->file('image')->store('deals', 'public') : null;
+    //     // if ($request->hasFile('image')) {
+    //     //     $imagePath = $request->file('image')->store('deals', 'public');
+    //     //     $request['image'] = $imagePath;
+    //     // }
+    //     $business = auth()->user()->business;
+    //     $category = $business->category;
+    //     Deal::create([
+    //         'business_id' => Auth::id(),
+    //         'image' => $imagePath,
+    //         // 'category_id' => $request->category_id,
+    //         'category_id' => $category->id,
+    //         ...$request->validated(),
+    //     ]);
 
-        return redirect()->route('deals.index')->with('success', 'Deal created successfully!');
-    }
+    //     return redirect()->route('deals.index')->with('success', 'Deal created successfully!');
+    // }
 
     // public function purchaseDeal(Request $request, $dealId)
     public function purchase(PurchaseDealRequest $request)

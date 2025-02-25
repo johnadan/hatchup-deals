@@ -5,20 +5,19 @@
         </h2>
     </x-slot>
 
-    @if (session()->has('success'))
-        <x-success-alert></x-success-alert>
-    @endif
-
-    @if (session()->has('error'))
-        <x-error-alert></x-error-alert>
-    @endif
-
     <div class="grid grid-cols-1 md:grid-cols-3 h-screen">
         <div class="row-span-2 bg-black">
             <x-sidebar></x-sidebar>
         </div>
         <div class="md:col-span-2 p-4">
             <div class="container">
+                @if (session()->has('success'))
+                    <x-success-alert></x-success-alert>
+                @endif
+
+                @if (session()->has('error'))
+                    <x-error-alert></x-error-alert>
+                @endif
                 <h1>Deals</h1>
                 <a href="{{ route('business.deals.create') }}" class="btn btn-primary mb-3">Create New Deal</a>
                 <div class="row">

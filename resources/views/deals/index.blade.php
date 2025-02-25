@@ -4,13 +4,6 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-    @if (session()->has('success'))
-        <x-success-alert></x-success-alert>
-    @endif
-
-    @if (session()->has('error'))
-        <x-error-alert></x-error-alert>
-    @endif
 
     <div class="grid grid-cols-1 md:grid-cols-3 h-screen">
         {{-- <div class="row-span-2 bg-black lg:w-20rem"> --}}
@@ -19,12 +12,19 @@
         </div>
         {{-- <div class="md:col-span-2 p-4 min-h-screen"> --}}
         <div class="md:col-span-2 p-4">
+            @if (session()->has('success'))
+                <x-success-alert></x-success-alert>
+            @endif
+
+            @if (session()->has('error'))
+                <x-error-alert></x-error-alert>
+            @endif
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-between items-center p-4">
-                <a href="{{ route('customer.deals.index') }}">
+                <a href="{{ route('categories.businesses') }}">
                     <h1 class="font-bold text-xl">Back</h1>
                 </a>
-                <label class="input input-bordered flex items-center gap-2">
-                    <input type="text" class="grow border-gray-100" placeholder="Search Deals" id="search-input" x-model="searchQuery"/>
+                {{-- <label class="input input-bordered flex items-center gap-2">
+                    <input type="text" class="grow border-gray-100" placeholder="Search Businesses" id="search-input" x-model="searchQuery"/>
                     <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
@@ -35,26 +35,29 @@
                         d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
                         clip-rule="evenodd" />
                     </svg>
-                </label>
+                </label> --}}
+                <h1 class="text-xl">Deals in <strong>{{ $category->name }}</strong></h1>
             </div>
             <div class="container mx-auto p-4 sm:p-6 lg:p-8">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+                    {{-- && $deals->currentPage() > 1 --}}
+                    @if(!empty($deals)  && $deals->count() > 0 )
+                        @foreach ($deals as $deal)
                     <div class="cards-container">
                         <div class="card">
-                            <a href="{{ route('deal-index') }}" class="group relative block bg-black rounded-lg">
+                            <a href="{{ route('deals.show', $deal) }}" class="group relative block bg-black rounded-lg">
                                 <img
                                 alt=""
-                                src="https://images.unsplash.com/photo-1603871165848-0aa92c869fa1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=772&q=80"
+                                src="{{ asset('storage/' . $deal->image) }}"
                                 class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
                                 />
                                 <div class="relative p-4 sm:p-6 lg:p-8">
-                                <p class="text-sm font-medium uppercase tracking-widest text-pink-500">UNA</p>
-                                <p class="text-xl font-bold text-white sm:text-2xl">UNA Pizza + Wine</p>
+                                <p class="text-sm font-medium uppercase tracking-widest text-pink-500">{{ $deal->title }}</p>
+                                <p class="text-xl font-bold text-white sm:text-2xl">{{ $deal->title }}</p>
                                 <div class="mt-32 sm:mt-48 lg:mt-64">
                                     <div>
                                         <p class="text-sm text-white">
-                                            Insert bio here: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
-                                            quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
+                                            {{ $deal->description }}
                                         </p>
                                     </div>
                                 </div>
@@ -62,75 +65,10 @@
                             </a>
                         </div>
                     </div>
-                    <div class="cards-container">
-                        <div class="card">
-                            <a href="#" class="group relative block bg-black rounded-lg">
-                                <img
-                                alt=""
-                                src="https://images.unsplash.com/photo-1603871165848-0aa92c869fa1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=772&q=80"
-                                class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
-                                />
-                                <div class="relative p-4 sm:p-6 lg:p-8">
-                                <p class="text-sm font-medium uppercase tracking-widest text-pink-500">UNA</p>
-                                <p class="text-xl font-bold text-white sm:text-2xl">UNA Pizza + Wine</p>
-                                <div class="mt-32 sm:mt-48 lg:mt-64">
-                                    <di>
-                                        <p class="text-sm text-white">
-                                            Insert bio here: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
-                                            quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
-                                        </p>
-                                    </div>
-                                </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="cards-container">
-                        <div class="card">
-                            <a href="#" class="group relative block bg-black rounded-lg">
-                                <img
-                                alt=""
-                                src="https://images.unsplash.com/photo-1603871165848-0aa92c869fa1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=772&q=80"
-                                class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
-                                />
-                                <div class="relative p-4 sm:p-6 lg:p-8">
-                                <p class="text-sm font-medium uppercase tracking-widest text-pink-500">UNA</p>
-                                <p class="text-xl font-bold text-white sm:text-2xl">UNA Pizza + Wine</p>
-                                <div class="mt-32 sm:mt-48 lg:mt-64">
-                                    <div>
-                                        <p class="text-sm text-white">
-                                            Insert bio here: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
-                                            quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
-                                        </p>
-                                    </div>
-                                </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="cards-container">
-                        <div class="card">
-                            <a href="#" class="group relative block bg-black rounded-lg">
-                                <img
-                                alt=""
-                                src="https://images.unsplash.com/photo-1603871165848-0aa92c869fa1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=772&q=80"
-                                class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
-                                />
-                                <div class="relative p-4 sm:p-6 lg:p-8">
-                                <p class="text-sm font-medium uppercase tracking-widest text-pink-500">UNA</p>
-                                <p class="text-xl font-bold text-white sm:text-2xl">UNA Pizza + Wine</p>
-                                <div class="mt-32 sm:mt-48 lg:mt-64">
-                                    <div>
-                                        <p class="text-sm text-white">
-                                            Insert bio here: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
-                                            quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
-                                        </p>
-                                    </div>
-                                </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                        @endforeach
+                    @else
+                    <p>No deals found.</p>
+                    @endif
                     <!-- Cards container -->
                     {{-- <div x-data="{ searchQuery: '', cards: [
                         { title: 'Tony Wayne', content: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?' },

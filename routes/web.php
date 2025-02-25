@@ -67,7 +67,7 @@ Route::middleware('auth')->group(function () {
     // Business routes
     Route::middleware('role:business')->group(function () {
         Route::resource('deals', DealController::class);
-        Route::get('/business/deals', [BusinessController::class, 'index'])->name('business.deals.index');//business.deals.index
+        Route::get('/business/deals', [BusinessController::class, 'businessDeals'])->name('business.deals.index');//business.deals.index
         Route::get('/business/deals/create', [BusinessController::class, 'createDeal'])->name('business.deals.create');
         Route::post('/business/deals', [BusinessController::class,'storeDeal'])->name('business.deals.store');
         // Claim a deal
@@ -85,9 +85,11 @@ Route::middleware('auth')->group(function () {
         // Route::get('/businesses', function () {
         //     return view('customer/businesses');
         // })->name('categories-businesses');
-        Route::get('/deals', [CustomerController::class, 'deals'])->name('customer.deals.index');
-        Route::get('/deals/category', [CustomerController::class, 'dealCategory'])->name('customer.deals.category');
-        Route::get('/deal/id', [CustomerController::class, 'dealDetails'])->name('customer.deal');
+        Route::get('/categories/deals', [CategoryController::class, 'deals'])->name('categories.deals');
+        Route::get('/categories/deals/{category}', [CustomerController::class, 'index'])->name('deals.by_category');
+        Route::get('/deals/{deal}', [CustomerController::class, 'show'])->name('deals.show');
+        // Route::get('/deals/category', [CustomerController::class, 'dealCategory'])->name('customer.deals.category');
+        // Route::get('/deal/id', [CustomerController::class, 'dealDetails'])->name('customer.deal');
         // Route::get('/businesses', [CustomerController::class, 'businesses'])->name('customer.businesses.index');
         // Category pages
         Route::get('/categories/businesses', [CategoryController::class, 'businesses'])->name('categories.businesses');

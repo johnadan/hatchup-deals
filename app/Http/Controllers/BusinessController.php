@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-// use App\Models\Business;
-// use App\Models\Category;
 use App\Models\{Business, Category, Deal, FeaturedDeal};
 use App\Http\Requests\StoreBusinessRequest;
 use App\Http\Requests\StoreDealRequest;
 use App\Http\Requests\UpdateBusinessRequest;
+use Illuminate\Support\Facades\Storage;
 
 class BusinessController extends Controller
 {
@@ -24,14 +23,14 @@ class BusinessController extends Controller
         return view('businesses.show', compact('business'));
     }
     /**
-     * Display a listing of the resource.
+     * Display a listing of the deals created by the logged in business user.
      */
-    // public function index()
-    // {
-    //     $deals = Deal::where('business_id',  auth()->user()->business)->get();
-    //     return view('business/deals/index', compact('deals'));
-    //     // return view('business/deals/index');
-    // }
+    public function businessDeals()
+    {
+        $deals = Deal::where('business_id',  auth()->user()->business->id)->get();
+        return view('business/deals/index', compact('deals'));
+        // return view('business/deals/index');
+    }
 
     // public function categoryBusinesses(Category $category)
     // {
@@ -56,14 +55,71 @@ class BusinessController extends Controller
 
     public function storeDeal(StoreDealRequest $request)
     {
-        dd($request->all());
-        // $business = auth()->user()->business;
-        // $deal = $business->deals()->create([
-        //     'image' => $request->file('image')->store('public/images/deals', 'public'),
-        //     'category_id' => $business->category_id,
-        //     ...$request->validated()
-        // ]);
-        // return redirect()->route('business.deals.index')->with('success', 'Deal created!');
+        // dd($request->all());
+        try {
+            $business = auth()->user()->business;
+
+            // if (!$business) {
+            //     throw new \Exception('Business not found for the authenticated user.');
+            // }
+
+            // if (!$request->hasFile('image')) {
+            //     throw new \Exception('Image file is required.');
+            // }
+
+            // $allowedfileExtensions = ['jpeg','jpg','png'];
+            // $image = $request->file('image');
+
+            $imagePath = $request->file('image')->store('deals', 'public');
+
+            // $imagePath = Storage::disk('public')->put('deals', $request->file('image'));
+
+            $validated = $request->validated();
+
+            unset($validated['image']);
+
+            $deal = $business->deals()->create([
+                // 'image' => $request->file('image')->store('public/images/deals', 'public'),
+                'image' => $imagePath,
+                'category_id' => $business->category_id,
+                'business_id' => $business->id,
+                'is_active' => $request->has('is_active'), // true if checked, false otherwise
+                'is_featured' => $request->has('is_featured'), // true if checked, false otherwise
+                // ...$request->validated()
+                ...$validated
+            ]);
+
+            // if (!$deal) {
+            //     throw new \Exception('Failed to create the deal.');
+            // }
+
+            return redirect()->route('business.deals.index')->with('success', 'Deal created!');
+
+            // // Begin database transaction
+            // \DB::beginTransaction();
+
+            // // Create a new deal using the validated data
+            // $deal = Deal::create($request->validated());
+
+            // // Create a new featured deal if required
+            // if ($request->input('is_featured', false)) {
+            //     FeaturedDeal::create([
+            //         'deal_id' => $deal->id,
+            //         'business_id' => $deal->business_id,
+            //     ]);
+            // }
+
+            // // Commit the database transaction
+            // \DB::commit();
+        } catch (\Exception $e) {
+            \Log::error('Error creating deal: ' . $e->getMessage());
+            return redirect()->back()->with('error', $e->getMessage());
+            // return redirect()->back()->with('error', 'An error occurred while creating the deal. Please try again.');
+
+        // // Rollback the database transaction
+            // \DB::rollBack();
+            // // Handle the exception here
+        }
     }
 
     /**
