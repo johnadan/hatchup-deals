@@ -9,6 +9,13 @@ export default {
         './resources/views/**/*.blade.php',
     ],
 
+    variants: {
+        extend: {
+            transitionProperty: ['responsive', 'motion-safe', 'motion-reduce'],
+            opacity: ['disabled'],
+        }
+    },
+
     theme: {
         extend: {
             fontFamily: {

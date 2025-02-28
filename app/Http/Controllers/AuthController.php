@@ -47,43 +47,9 @@ class AuthController extends Controller
             'business_id' => $request->role === 'business' ? $business->id : null, // Only required for business accounts
         ]);
 
-        // $user = User::create([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password),
-        //     'role' => $request->role, // customer or business
-        //     'status' => $request->role === 'business' ? 'pending' : 'approved', // Business accounts require approval
-        // ]);
-
-        // If the user is a business owner, create a business and link the user to it
-        // if ($request->role === 'business') {
-        //     $business = Business::create([
-        //         'name' => $request->business_name,
-        //         'address' => $request->address,
-        //         'category' => $request->category,
-        //     ]);
-
-        //     $user->business_id = $business->id;
-        //     $user->save();
-        // }
-
-        // return redirect()->route('login')->with('success', 'Registration successful!');
-
-        // Log in the user if their account is approved
-        // if ($user->status === 'approved') {
-        //     Auth::login($user);
-        //     // return redirect()->route('home')->with('success', 'Registration successful!');
-        //     // return redirect()->route('dashboard')->with('success', 'Registration successful!');
-        //     return redirect()->route('deals')->with('success', 'Registration successful!');
-        // }
-
-        // Redirect based on role
-
         if ($user->role === 'business'){
-            // Business accounts require approval
-            return redirect()->route('login')->with('success', 'Your account is pending approval.');
+            return redirect()->route('login')->with('success', 'Your account is pending. Please wait for admin approval.');
         } else {
-            // Log in the user
             Auth::login($user);
 
             if ($user->role === 'customer') {
@@ -96,13 +62,11 @@ class AuthController extends Controller
 
     }
 
-    // Show login form
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
-    // Handle login
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -110,11 +74,16 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
-            // Check if the user's account is approved
-            if ($user->status !== 'approved') {
-                Auth::logout();
-                return redirect()->route('login')->with('error', 'Your account is pending approval.');
-            } else { //approved
+            // Check if the user's account is business
+            if ($user->role === 'business'){
+                if ($user->status === 'pending') {
+                    Auth::logout();
+                    return redirect()->route('login')->with('error', 'Your account is pending. Please wait for admin approval.');
+                } elseif($user->status === 'rejected'){
+                    Auth::logout();
+                    return redirect()->route('login')->with('error', 'Sorry, your account is rejected. If you think this is wrong, please reach out to the website admin.');
+                }
+            } else { //not a business, approved
                 if ($user->role === 'customer') {
                     return redirect()->route('categories.businesses');
                     // ->with('success', 'Login successful!')
@@ -132,10 +101,10 @@ class AuthController extends Controller
         return redirect()->route('login')->with('error', 'Invalid credentials.');
     }
 
-    // Handle logout
     public function logout()
     {
         Auth::logout();
+
         return redirect()->route('home')->with('success', 'Logged out successfully!');
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-// use App\Models\User;
 use App\Models\{User, Business, FeaturedBusiness};
 use Illuminate\Http\Request;
 
@@ -29,32 +28,49 @@ class AdminController extends Controller
         return view('admin/businesses-pending', compact('businesses'));
     }
 
-    // Approve a business account
-    public function approveBusiness($id)
+    // public function approveBusiness($id)
+    // {
+    //     $business = User::findOrFail($id);
+    //     $business->status = 'approved';
+    //     $business->save();
+
+    //     // Send approval email to the business
+    //     // Implement this using Laravel Mail
+
+    //     // return redirect()->route('admin.businesses.pending')->with('success', 'Business account approved!');
+    //     return redirect()->back()->with('success', 'Business account approved!');
+    // }
+    public function approve(User $business)
     {
-        $business = User::findOrFail($id);
-        $business->status = 'approved';
-        $business->save();
-
-        // Send approval email to the business
-        // Implement this using Laravel Mail
-
-        // return redirect()->route('admin.businesses.pending')->with('success', 'Business account approved!');
-        return redirect()->back()->with('success', 'Business account approved!');
+        try {
+            $business->update(['status' => 'approved']);
+            return back()->with('success', 'Business user approved successfully');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error approving business user');
+        }
     }
 
-    // Reject a business account
-    public function rejectBusiness($id)
+    // public function rejectBusiness($id)
+    // {
+    //     $business = User::findOrFail($id);
+    //     $business->status = 'rejected';
+    //     $business->save();
+
+    //     // Send rejection email to the business
+    //     // Implement this using Laravel Mail
+
+    //     // return redirect()->route('admin.businesses.pending')->with('success', 'Business account rejected!');
+    //     return redirect()->back()->with('success', 'Business account rejected!');
+    // }
+
+    public function reject(User $business)
     {
-        $business = User::findOrFail($id);
-        $business->status = 'rejected';
-        $business->save();
-
-        // Send rejection email to the business
-        // Implement this using Laravel Mail
-
-        // return redirect()->route('admin.businesses.pending')->with('success', 'Business account rejected!');
-        return redirect()->back()->with('success', 'Business account rejected!');
+        try {
+            $business->update(['status' => 'rejected']);
+            return back()->with('success', 'Business rejected successfully');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error rejecting business');
+        }
     }
 
     // Feature a business

@@ -39,3 +39,6 @@
         </button>
     </div>
 </div>
+{{-- <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)">
+    {{ $message }}
+</div> --}}

@@ -19,7 +19,8 @@ Route::get('/', function () {
 // Route::get('/register-business', function () {
 //     return view('auth/register-business');
 // })->name('register.business');
-Route::get('/register-business', [BusinessController::class, 'create'])->name('business.create');
+
+// Route::get('/register-business', [BusinessController::class, 'create'])->name('business.create');
 
 Route::post('/auth/register', [AuthController::class, 'register'])->name('auth.register');
 Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login');
@@ -27,38 +28,20 @@ Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login')
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
+
 Route::get('/dashboard', [CategoryController::class, 'index'])
 ->middleware(['auth', 'verified'])
 ->name('dashboard');
 
 // Authenticated routes
 Route::middleware('auth')->group(function () {
-    // customers
-    // Route::get('/category-businesses', [BusinessController::class, 'categoryBusinesses'])->name('category-businesses');
-    // dashboard lists businesses
-    // Route::get('/category/businesses', function () {
-    //     return view('business/category-businesses');
-    // })->name('category-businesses');
-    // Route::get('/deals/index', function () {
-    //     return view('customer/deals');
-    // })->name('deals'); //list all deals
-    // Route::get('/category/deals', function () {
-    //     return view('customer/deals-category');
-    // })->name('category-deals');
-    // Route::get('/category/deals/deal', function () {
-    //     return view('customer/deal-index');
-    // })->name('deal-index'); //single deal
-
-    // Route::get('/deals/create', [DealController::class, 'create'])->name('deals.create');
-    // Route::post('/deals', [DealController::class, 'store'])->name('deals.store');
-    // Route::get('/deals/index', [DealController::class, 'index'])->name('deals.index');
 
     // all
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // businesses
+    // admin?
     // Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
     // Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
     // Route::patch('/categories', [CategoryController::class, 'update'])->name('categories.update'); // edit is for page
@@ -82,21 +65,11 @@ Route::middleware('auth')->group(function () {
         Route::middleware('role:customer')->group(function () {
         Route::post('/favorites', [FavoriteController::class, 'store'])->name('favorites.store');
         Route::delete('/favorites/{id}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
-        // Route::get('/businesses', function () {
-        //     return view('customer/businesses');
-        // })->name('categories-businesses');
         Route::get('/categories/deals', [CategoryController::class, 'deals'])->name('categories.deals');
         Route::get('/categories/deals/{category}', [CustomerController::class, 'index'])->name('deals.by_category');
         Route::get('/deals/{deal}', [CustomerController::class, 'show'])->name('deals.show');
-        // Route::get('/deals/category', [CustomerController::class, 'dealCategory'])->name('customer.deals.category');
-        // Route::get('/deal/id', [CustomerController::class, 'dealDetails'])->name('customer.deal');
-        // Route::get('/businesses', [CustomerController::class, 'businesses'])->name('customer.businesses.index');
-        // Category pages
         Route::get('/categories/businesses', [CategoryController::class, 'businesses'])->name('categories.businesses');
-        // Route::get('/businesses/category', [CustomerController::class, 'businessCategory'])->name('customer.businesses.category');
-        // Dynamic business and deal pages
         Route::get('/categories/businesses/{category}', [BusinessController::class, 'index'])->name('businesses.by_category');
-        // Business and deal profile pages
         Route::get('/businesses/{business}', [BusinessController::class, 'show'])->name('businesses.show');
         // Purchase a deal
         Route::post('/deals/purchase', [DealController::class, 'purchase'])->name('deals.purchase');
@@ -112,6 +85,12 @@ Route::middleware('auth')->group(function () {
         Route::post('/admin/businesses/{id}/unfeature', [AdminController::class, 'unfeatureBusiness'])->name('admin.businesses.unfeature');
         // Route::get('/admin/businesses', [AdminController::class, 'businesses'])->name('admin.businesses.index');
         Route::get('/admin/businesses/pending', [AdminController::class, 'pendingBusinesses'])->name('admin.businesses.pending');
+        // Route::post('/admin/businesses/approve', [AdminController::class, 'approveBusiness'])->name('admin.businesses.approve');
+        // Route::post('/admin/businesses/reject', [AdminController::class, 'rejectBusiness'])->name('admin.businesses.reject');
+        // Route::post('/admin/businesses/{business}/approve', [AdminController::class, 'approveBusiness'])->name('admin.businesses.approve');
+        // Route::post('/admin/businesses/{business}/reject', [AdminController::class, 'rejectBusiness'])->name('admin.businesses.reject');
+        Route::post('/admin/businesses/{business}/approve', [AdminController::class, 'approve'])->name('admin.businesses.approve');
+        Route::post('/admin/businesses/{business}/reject', [AdminController::class, 'reject'])->name('admin.businesses.reject');
     });
 });
 

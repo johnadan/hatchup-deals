@@ -53,7 +53,7 @@
                                 />
                                 <div class="relative p-4 sm:p-6 lg:p-8">
                                 <p class="text-sm font-medium uppercase tracking-widest text-pink-500">{{ $business->name }}</p>
-                                <p class="text-xl font-bold text-white sm:text-2xl">UNA Pizza + Wine</p>
+                                <p class="text-xl font-bold text-white sm:text-2xl">{{ $business->name }}</p>
                                 <div class="mt-32 sm:mt-48 lg:mt-64">
                                     <div>
                                         <p class="text-sm text-white">

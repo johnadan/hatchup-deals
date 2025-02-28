@@ -45,12 +45,12 @@
     </div> --}}
     {{-- <ul class="menu bg-base-200 rounded-box w-full"> --}}
     <ul class="menu text-white">
-        <li class="py-3">
+        {{-- <li class="py-3">
             <a class="hover:bg-base-100 hover:text-black">
             <i class="fa-brands fa-readme"></i>
             Magazine Issues
             </a>
-        </li>
+        </li> --}}
         @if(auth()->user()->role === 'customer')
         <li class="py-3">
             <a href="{{ route('categories.businesses') }}" class="{{ request()->routeIs('categories.businesses') ? 'bg-base-100 text-black hover:bg-base-100 hover:text-black' : 'hover:bg-base-100 hover:text-black' }}">
