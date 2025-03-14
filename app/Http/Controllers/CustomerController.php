@@ -10,7 +10,8 @@ class CustomerController extends Controller
     // Show deals by category
     public function index(Category $category)
     {
-        $deals = $category->deals;
+        $deals = $category->deals->where('is_active', '1');
+        // $deals = Deal::where('category_id', $category->id)->where('is_active', '1')->get();
 
         return view('deals/index', compact('category', 'deals'));
     }

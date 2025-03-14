@@ -42,17 +42,11 @@
         </div>
 
         @if($user->role === 'business')
-        <label for="category" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Category
-        </label>
-        <select id="category" name="category_id" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
-            @foreach($categories as $category)
-                {{-- <option value="{{ $category->id }}" {{ $category->id === $user->category_id ? 'selected' : '' }}>{{ $category->full_name }}</option> --}}
-                <option value="{{ $category->id }}" {{ $category->id == $currentCategory->id ? 'selected' : '' }}>
-                    {{ $category->full_name }}
-                </option>
-            @endforeach
-        </select>
+        <div>
+            <x-input-label for="category" :value="__('Category')" />
+            <x-text-input disabled id="category" name="category" type="text" class="mt-1 block w-full" :value="old('category', $user->business->category->name)" required autofocus autocomplete="category" disabled/>
+            <x-input-error class="mt-2" :messages="$errors->get('category')" />
+        </div>
         @endif
 
         <div>

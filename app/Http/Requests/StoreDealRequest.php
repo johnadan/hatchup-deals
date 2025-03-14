@@ -32,11 +32,10 @@ class StoreDealRequest extends FormRequest
             'end_date' => 'required|date|after:start_date',
             'max_usage_limit' => 'required|integer|min:1',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            // 'category_id' => 'required|integer',
             'is_active' => 'nullable|boolean',
             'is_featured' => 'nullable|boolean',
         ];
     }
     // 'end_date' => 'required|date|after_or_equal:start_date',
-    // 'category_id' => 'required|exists:categories,id',
+    // 'category_id' => 'required|integer|exists:categories,id',
 }

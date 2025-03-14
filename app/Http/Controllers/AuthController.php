@@ -82,8 +82,10 @@ class AuthController extends Controller
                 } elseif($user->status === 'rejected'){
                     Auth::logout();
                     return redirect()->route('login')->with('error', 'Sorry, your account is rejected. If you think this is wrong, please reach out to the website admin.');
+                } elseif($user->status === 'approved'){
+                    return redirect()->route('business.deals.index');
                 }
-            } else { //not a business, approved
+            } else { //not a business
                 if ($user->role === 'customer') {
                     return redirect()->route('categories.businesses');
                     // ->with('success', 'Login successful!')
@@ -91,8 +93,6 @@ class AuthController extends Controller
                     // return redirect()->route('admin.businesses.index');
                     return redirect()->route('admin.businesses.pending');
                     // ->with('success', 'Login successful!')
-                } elseif ($user->status === 'approved' && $user->role === 'business') {
-                    return redirect()->route('business.deals.index');
                 }
             }
 

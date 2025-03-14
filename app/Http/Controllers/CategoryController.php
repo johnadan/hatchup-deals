@@ -18,7 +18,15 @@ class CategoryController extends Controller
     // Show all categories for deals
     public function deals()
     {
-        $categories = Category::withCount('deals')->get();
+
+        // $categories = Category::withCount('deals')->get();
+        // $categories = Category::whereHas('deals', function ($query) {
+        //     $query->where('is_active', 1);
+        // })->withCount('deals')->get();
+        // $categories = Category::withCount(['active_deals' => function ($query) {
+        //     $query->where('is_active', 1);
+        // }])->get();
+        $categories = Category::withCount('active_deals')->get();
         return view('categories.deals', compact('categories'));
     }
     /**

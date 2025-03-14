@@ -34,8 +34,9 @@ class Deal extends Model
     protected $casts = [
         'is_active' => 'boolean',
         'is_featured' => 'boolean',
+        'start_date' => 'date',
+        'end_date' => 'date',
     ];
-
 
     // public function customers(): BelongsToMany
     // {

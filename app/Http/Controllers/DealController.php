@@ -252,27 +252,29 @@ class DealController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDealRequest $request, Deal $deal)
-    {
-        if ($request->hasFile('image')) {
-            if ($deal->image) {
-                Storage::disk('public')->delete($deal->image);
-            }
-            $imagePath = $request->file('image')->store('deals', 'public');
-            $deal->image = $imagePath;
-        }
+    // public function update(UpdateDealRequest $request, Deal $deal)
+    // {
+    //     if ($request->hasFile('image')) {
+    //         if ($deal->image) {
+    //             Storage::disk('public')->delete($deal->image);
+    //         }
+    //         $imagePath = $request->file('image')->store('deals', 'public');
+    //         $deal->image = $imagePath;
+    //     }
 
-        $deal->update($request->validated());
+    //     $deal->update($request->validated());
 
-        return redirect()->route('deals.index')->with('success', 'Deal updated successfully!');
-    }
+    //     return redirect()->route('deals.index')->with('success', 'Deal updated successfully!');
+    // }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Deal $deal)
     {
-        //
+        $deal->delete();
+
+        return redirect()->route('business.deals.index')->with('success', 'Deal deleted successfully!');
     }
 
     public function generateQrCode($orderId)

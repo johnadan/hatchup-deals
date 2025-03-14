@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\{Business, Category, Deal, FeaturedDeal};
-use App\Http\Requests\StoreBusinessRequest;
 use App\Http\Requests\StoreDealRequest;
+use App\Http\Requests\UpdateDealRequest;
+use App\Http\Requests\StoreBusinessRequest;
 use App\Http\Requests\UpdateBusinessRequest;
 use Illuminate\Support\Facades\Storage;
 
@@ -27,7 +28,9 @@ class BusinessController extends Controller
      */
     public function businessDeals()
     {
-        $deals = Deal::where('business_id',  auth()->user()->business->id)->get();
+        // $deals = Deal::where('business_id',  auth()->user()->business->id)->get();
+        $deals = Deal::where('business_id', auth()->user()->business->id)
+                ->paginate(10);
         return view('business/deals/index', compact('deals'));
         // return view('business/deals/index');
     }
@@ -53,19 +56,17 @@ class BusinessController extends Controller
         return view('business/deals/create', compact('categories'));
     }
 
+    public function editDeal(Deal $deal)
+    {
+        $categories = Category::all();
+
+        return view('business/deals/edit', compact('deal', 'categories'));
+    }
+
     public function storeDeal(StoreDealRequest $request)
     {
-        // dd($request->all());
         try {
             $business = auth()->user()->business;
-
-            // if (!$business) {
-            //     throw new \Exception('Business not found for the authenticated user.');
-            // }
-
-            // if (!$request->hasFile('image')) {
-            //     throw new \Exception('Image file is required.');
-            // }
 
             // $allowedfileExtensions = ['jpeg','jpg','png'];
             // $image = $request->file('image');
@@ -79,13 +80,11 @@ class BusinessController extends Controller
             unset($validated['image']);
 
             $deal = $business->deals()->create([
-                // 'image' => $request->file('image')->store('public/images/deals', 'public'),
                 'image' => $imagePath,
                 'category_id' => $business->category_id,
                 'business_id' => $business->id,
                 'is_active' => $request->has('is_active'), // true if checked, false otherwise
                 'is_featured' => $request->has('is_featured'), // true if checked, false otherwise
-                // ...$request->validated()
                 ...$validated
             ]);
 
@@ -119,6 +118,51 @@ class BusinessController extends Controller
         // // Rollback the database transaction
             // \DB::rollBack();
             // // Handle the exception here
+        }
+    }
+
+    public function updateDeal(UpdateDealRequest $request, Deal $deal)
+    {
+        // Add authorization
+        // $this->authorize('update', $deal);
+
+        try {
+            $validated = $request->validated();
+
+            if ($request->hasFile('image')) {
+                if ($deal->image) {
+                    Storage::disk('public')->delete($deal->image);
+                }
+                // Store new image
+                $validated['image'] = $request->file('image')->store('deals', 'public');
+                // $imagePath = $request->file('image')->store('deals', 'public');
+                // $deal->image = $imagePath;
+
+                // Get the uploaded image...
+                // $image = $request->file('image');
+
+                // Store the image...
+                // $imageName = time().'.'.$image->getClientOriginalExtension();
+                // $image->move(public_path('path/to/images'), $imageName);
+            }
+
+            // unset($validated['image']);
+
+            // $deal->update([
+            //     'image' => $imagePath,
+            //     'is_active' => $request->has('is_active'),
+            //     'is_featured' => $request->has('is_featured'),
+            //     ...$validated
+            // ]);
+
+            // Update with validated data (now including processed image path)
+            $deal->update($validated);
+
+            return redirect()->route('business.deals.index')->with('success', 'Deal updated successfully!');
+
+        } catch (\Exception $e) {
+            \Log::error('Error updating deal: ' . $e->getMessage());
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 

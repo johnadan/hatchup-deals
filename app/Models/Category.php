@@ -31,4 +31,9 @@ class Category extends Model
     {
         return $this->hasMany(Deal::class);
     }
+
+    public function active_deals(): HasMany
+    {
+        return $this->hasMany(Deal::class)->where('is_active', 1);
+    }
 }

@@ -35,9 +35,10 @@ class DealPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Deal $deal): bool
+    public function update(User $business, Deal $deal): bool
     {
-        return false;
+        // return false;
+        return $business->business->id === $deal->business_id;
     }
 
     /**

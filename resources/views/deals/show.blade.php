@@ -27,7 +27,7 @@
                         />
                         <p class="mt-2 text-gray-500">{{ $deal->description }}</p>
                         <p class="mt-2 text-gray-500">Price: <del>{{ $deal->original_price }}</del> <strong>{{ $deal->discounted_price }}</strong></p>
-                        <p class="mt-2 text-gray-500">Valid Until {{ $deal->end_date }}</p>
+                        <p class="mt-2 text-gray-500">Valid Until {{ $deal->end_date->format('F d, Y') }}</p>
                     </div>
                 </div>
             </div>

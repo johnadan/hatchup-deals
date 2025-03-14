@@ -29,9 +29,9 @@ Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login')
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/dashboard', [CategoryController::class, 'index'])
-->middleware(['auth', 'verified'])
-->name('dashboard');
+// Route::get('/dashboard', [CategoryController::class, 'index'])
+// ->middleware(['auth', 'verified'])
+// ->name('dashboard');
 
 // Authenticated routes
 Route::middleware('auth')->group(function () {
@@ -49,14 +49,18 @@ Route::middleware('auth')->group(function () {
 
     // Business routes
     Route::middleware('role:business')->group(function () {
-        Route::resource('deals', DealController::class);
-        Route::get('/business/deals', [BusinessController::class, 'businessDeals'])->name('business.deals.index');//business.deals.index
+        // Route::resource('deals', DealController::class);
+        Route::get('/business/deals', [BusinessController::class, 'businessDeals'])->name('business.deals.index');
         Route::get('/business/deals/create', [BusinessController::class, 'createDeal'])->name('business.deals.create');
+        Route::get('/business/deals/edit/{deal}', [BusinessController::class, 'editDeal'])->name('business.deals.edit');
+        Route::put('/business/deals/{deal}', [BusinessController::class, 'updateDeal'])->name('business.deals.update');
         Route::post('/business/deals', [BusinessController::class,'storeDeal'])->name('business.deals.store');
+        Route::delete('/business/deals/{deal}', [DealController::class,'destroy'])->name('business.deals.delete');
         // Claim a deal
         Route::post('/deals/claim', [DealController::class, 'claim'])->name('deals.claim');
-        Route::post('/business/deals/{id}/feature', [BusinessController::class, 'featureDeal'])->name('business.deals.feature');
-        Route::post('/business/deals/{id}/unfeature', [BusinessController::class, 'unfeatureDeal'])->name('business.deals.unfeature');
+        // redundant, already in edit deal
+        // Route::post('/business/deals/{id}/feature', [BusinessController::class, 'featureDeal'])->name('business.deals.feature');
+        // Route::post('/business/deals/{id}/unfeature', [BusinessController::class, 'unfeatureDeal'])->name('business.deals.unfeature');
         Route::get('/business/users/create', [BusinessUserController::class, 'create'])->name('business.users.create');
         Route::post('/business/users', [BusinessUserController::class, 'store'])->name('business.users.store');
     });

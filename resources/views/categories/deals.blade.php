@@ -65,8 +65,8 @@
                                     </li>
                                     <li>
                                         <h6 class="text-gray-900 text-sm">
-                                            {{ $category->deals_count }}
-                                            @if($category->deals_count > 1)
+                                            {{ $category->active_deals_count }}
+                                            @if($category->active_deals_count > 1)
                                             deals
                                             @else
                                             deal
