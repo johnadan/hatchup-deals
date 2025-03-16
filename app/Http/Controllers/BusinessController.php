@@ -35,6 +35,13 @@ class BusinessController extends Controller
         // return view('business/deals/index');
     }
 
+    public function dealsbyBusiness(Business $business)
+    {
+        $deals = $business->deals->where('is_active', '1')->where('end_date', '>=', now());
+        // ->paginate(9);
+        return view('businesses.deals', compact('business', 'deals'));
+    }
+
     // public function categoryBusinesses(Category $category)
     // {
     //     // $businesses = $category->businesses;

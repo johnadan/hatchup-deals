@@ -6,11 +6,9 @@
     </x-slot>
 
     <div class="grid grid-cols-1 md:grid-cols-3 h-screen">
-        {{-- <div class="row-span-2 bg-black lg:w-20rem"> --}}
         <div class="row-span-2 bg-black">
             <x-sidebar></x-sidebar>
         </div>
-        {{-- <div class="md:col-span-2 p-4 min-h-screen"> --}}
         <div class="md:col-span-2 p-4">
             @if (session()->has('success'))
                 <x-success-alert></x-success-alert>
@@ -20,15 +18,14 @@
                 <x-error-alert></x-error-alert>
             @endif
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-between items-center p-4">
-                <a href="{{ route('categories.businesses') }}">
+                <a href="{{ route('businesses.show', $business) }}">
                     <h1 class="font-bold text-xl">Back</h1>
                 </a>
-                <h1 class="text-xl">Deals in <strong>{{ $category->name }}</strong></h1>
+                <h1 class="text-xl">Deals in <strong>{{ $business->name }}</strong></h1>
             </div>
             {{-- && $deals->currentPage() > 1 --}}
             {{-- <div class="container mx-auto p-4 sm:p-6 lg:p-8">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-                    @if(!empty($deals)  && $deals->count() > 0 )
                         @foreach ($deals as $deal)
                     <div class="cards-container">
                         <div class="card">
@@ -53,46 +50,15 @@
                         </div>
                     </div>
                         @endforeach
-                    @else
-                    <p>No deals found.</p>
-                    @endif --}}
-                    <!-- Cards container -->
-                    {{-- <div x-data="{ searchQuery: '', cards: [
-                        { title: 'Tony Wayne', content: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?' },
-                        { title: 'Tony Wayne', content: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?' },
-                        { title: 'Tony Wayne', content: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?' },
-                        { title: 'Tony Wayne', content: 'hoy' },
-                    ]}" class="cards-container">
-                        <template x-for="card in cards" :key="card.title">
-                            <div class="card" x-show="card.title.toLowerCase().includes(searchQuery.toLowerCase()) || card.content.toLowerCase().includes(searchQuery.toLowerCase())">
-                                <a href="#" class="group relative block bg-black rounded-lg">
-                                <img
-                                alt=""
-                                src="https://images.unsplash.com/photo-1603871165848-0aa92c869fa1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=772&q=80"
-                                class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
-                                />
-                                <div class="relative p-4 sm:p-6 lg:p-8">
-                                <p class="text-sm font-medium uppercase tracking-widest text-pink-500">Developer</p>
-                                <p class="text-xl font-bold text-white sm:text-2xl" x-text="card.title"></p>
-                                <div class="mt-32 sm:mt-48 lg:mt-64">
-                                    <div
-                                    class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100"
-                                    >
-                                    <p class="text-sm text-white" x-text="card.content"></p>
-                                    </div>
-                                </div>
-                                </div>
-                                </a>
-                            </div>
-                        </template>
-                    </div> --}}
-                {{-- </div>
+                </div>
             </div> --}}
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         @if(!empty($deals)  && $deals->count() > 0 )
                             @foreach($deals as $deal)
+                            {{-- $deal->is_active &&  --}}
+                                {{-- @if($deal->end_date->isFuture()) --}}
                                 <a href="{{ route('deals.show', $deal) }}" class="group relative block h-96 overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow">
                                     <!-- Deal Image Background -->
                                     <div
@@ -133,6 +99,7 @@
                                         </div>
                                     </div>
                                 </a>
+                                {{-- @endif --}}
                             @endforeach
                         @else
                         <p>No deals found.</p>

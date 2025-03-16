@@ -23,6 +23,11 @@
                         <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{{ $business->name }}</div>
                         <p class="mt-2 text-gray-500">{{ $business->address }}</p>
                         <p class="mt-2 text-gray-500">{{ $business->phone_number }}</p>
+                        <a href="{{ route('businesses.deals', $business) }}">
+                            <button class="mt-4 bg-orange-500 text-white hover:bg-white hover:text-orange-500 font-bold py-2 px-4 rounded-lg">
+                                View Deals
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -75,6 +75,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/categories/businesses', [CategoryController::class, 'businesses'])->name('categories.businesses');
         Route::get('/categories/businesses/{category}', [BusinessController::class, 'index'])->name('businesses.by_category');
         Route::get('/businesses/{business}', [BusinessController::class, 'show'])->name('businesses.show');
+        Route::get('/businesses/{business}/deals', [BusinessController::class, 'dealsbyBusiness'])->name('businesses.deals');
         // Purchase a deal
         Route::post('/deals/purchase', [DealController::class, 'purchase'])->name('deals.purchase');
         Route::get('/purchased-deals', [OrderController::class, 'purchasedDeals'])->name('customer.purchased-deals');

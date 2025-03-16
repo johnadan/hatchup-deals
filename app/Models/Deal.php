@@ -83,4 +83,10 @@ class Deal extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    public function getRemainingClaimsAttribute()
+    {
+        return $this->max_usage_limit - $this->current_usage_count;
+    }
+
 }

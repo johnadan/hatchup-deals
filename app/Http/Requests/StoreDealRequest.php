@@ -31,7 +31,7 @@ class StoreDealRequest extends FormRequest
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
             'max_usage_limit' => 'required|integer|min:1',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'is_active' => 'nullable|boolean',
             'is_featured' => 'nullable|boolean',
         ];

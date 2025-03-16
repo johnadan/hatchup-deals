@@ -13,8 +13,11 @@
 <div class="sidebar lg:sticky">
     <div class="flex items-center gap-4 px-5 py-3">
         <img
-        alt=""
-        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+        src="{{ auth()->user()->profile_picture
+        ? asset('storage/' . auth()->user()->profile_picture)
+        : asset('default-avatar.jpg') }}"
+        alt="{{ auth()->user()->full_name }}"
+        {{-- src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" --}}
         {{-- src="https://images.unsplash.com/photo-1614644147724-2d4785d69962?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80" --}}
         class="size-16 rounded-full object-cover"
         />
@@ -64,12 +67,12 @@
                 Local Deals
             </a>
         </li>
-        <li class="py-3">
-        <a class="hover:bg-base-100 hover:text-black">
-            <i class="fa-regular fa-star"></i>
-            Favorites
-        </a>
-        </li>
+        {{-- <li class="py-3">
+            <a class="hover:bg-base-100 hover:text-black">
+                <i class="fa-regular fa-star"></i>
+                Favorites
+            </a>
+        </li> --}}
         @elseif(auth()->user()->role === 'business')
         {{-- <li class="py-3">
             <a href="{{ route('dashboard') }}" class="hover:bg-base-100 hover:text-black">

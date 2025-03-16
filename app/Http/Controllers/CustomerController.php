@@ -10,7 +10,7 @@ class CustomerController extends Controller
     // Show deals by category
     public function index(Category $category)
     {
-        $deals = $category->deals->where('is_active', '1');
+        $deals = $category->deals->where('is_active', '1')->where('end_date', '>=', now());
         // $deals = Deal::where('category_id', $category->id)->where('is_active', '1')->get();
 
         return view('deals/index', compact('category', 'deals'));
@@ -18,7 +18,8 @@ class CustomerController extends Controller
 
     public function show(Deal $deal)
     {
-        return view('deals.show', compact('deal'));
+        $business = $deal->business;
+        return view('deals.show', compact('business', 'deal'));
     }
     // public function businesses()
     // {

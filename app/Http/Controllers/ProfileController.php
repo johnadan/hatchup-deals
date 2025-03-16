@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Category;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -22,8 +23,6 @@ class ProfileController extends Controller
         // $currentCategory = $user->business->category;
         if ($user->role == 'business') {
             $business = $user->business;
-            // dd($business);
-            // dd($user);
             $currentCategory = $business->category;
         } else {
             $currentCategory = null;
@@ -40,21 +39,45 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $validated = $request->validated();
+
+        if ($request->hasFile('profile_picture')) {
+            if ($user->profile_picture) {
+                Storage::disk('public')->delete($user->profile_picture);
+            }
+            $validated['profile_picture'] = $request->file('profile_picture')->store('profile_pictures', 'public');
         }
 
-        if ($request->user()->role == 'business') {
-            $business = $request->user()->business;
-            $business->category_id = $request->input('category_id');
-            $business->save();
+        // if($request->has('image')) {
+        //     $image = $request->file('image');
+        //     $imageName = time().'.'.$image->extension();
+        //     $image->move(public_path('images'), $imageName);
+        //     $request->user()->profile_picture = $imageName;
+        // }
+
+        $user->fill($validated);
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        // might not need this
+        // if ($user->role == 'business') {
+        //     $business = $user->business;
+        //     $business->category_id = $request->input('category_id');
+        //     $business->save();
+        // }
+        if ($user->role === 'business' && $request->has('category_id')) {
+            $user->business()->update([
+                'category_id' => $request->input('category_id')
+            ]);
+        }
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        $user->save();
+
+        return Redirect::route('profile.edit')->with('success', 'Profile successfully updated.');
     }
 
     /**
